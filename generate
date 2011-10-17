@@ -33,11 +33,7 @@ $mimes = array();
 
 foreach ($lines as $k => &$line)
 {
-	if (strpos($line, '#') === 0)
-	{
-		unset($lines[$k]);
-	}
-	else
+	if (strpos($line, '#') !== 0)
 	{
 		preg_match_all('/^((\w|\/|\.|-|\+)+)(\s+)([^\n]*)$/im', $line, $match);
 		$type = $match[1][0];
