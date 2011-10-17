@@ -92,5 +92,5 @@ if (file_put_contents($mimetypes_json, $generated_from . json_encode($mimes)))
 }
 else
 {
-	echo 'Failed to write ' . $mimetypes_json . '. Please ensuse that this file system location is writable.' . PHP_EOL;
+	echo 'Failed to write ' . $mimetypes_json . '. Please ensure that this file system location is writable.' . PHP_EOL;
 }
