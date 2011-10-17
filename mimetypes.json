@@ -321,7 +321,7 @@
 	"jpgm": "video\/jpm",
 	"jpgv": "video\/jpeg",
 	"jpm": "video\/jpm",
-	"js": "application\/javascript",
+	"js": "text\/javascript",
 	"json": "application\/json",
 	"kar": "audio\/midi",
 	"karbon": "application\/vnd.kde.karbon",

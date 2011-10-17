@@ -1,4 +1,5 @@
 {
 	"ini": "text/plain",
+	"js": "text/javascript",
 	"yml yaml": "text/x-yaml"
 }
