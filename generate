@@ -1,0 +1,96 @@
+#! /usr/bin/env php
+<?php
+/*
+ * Copyright (c) 2011 Ryan Parman
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of
+ * this software and associated documentation files (the "Software"), to deal in
+ * the Software without restriction, including without limitation the rights to
+ * use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+ * of the Software, and to permit persons to whom the Software is furnished to do
+ * so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ *
+ * <http://opensource.org/licenses/MIT>
+ */
+
+$lines = file(__DIR__ . '/mime.types', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+$mimes = array();
+
+
+##################################################################################
+# PARSE TEXT INTO A LOGICAL DATA STRUCTURE
+
+foreach ($lines as $k => &$line)
+{
+	if (strpos($line, '#') === 0)
+	{
+		unset($lines[$k]);
+	}
+	else
+	{
+		preg_match_all('/^((\w|\/|\.|-|\+)+)(\s+)([^\n]*)$/im', $line, $match);
+		$type = $match[1][0];
+		$extensions = explode(' ', $match[4][0]);
+
+		foreach ($extensions as $extension)
+		{
+			if (!isset($mimes[$extension]))
+			{
+				$mimes[$extension] = $type;
+			}
+		}
+	}
+}
+
+
+##################################################################################
+# READ AND APPLY CUSTOMIZATIONS
+
+$customize_json = __DIR__ . '/customize.json';
+
+if (file_exists($customize_json))
+{
+	$entries = json_decode(file_get_contents($customize_json), true);
+
+	foreach ($entries as $extensions => $type)
+	{
+		$extensions = explode(' ', $extensions);
+
+		foreach ($extensions as $extension)
+		{
+			$mimes[$extension] = $type;
+		}
+	}
+}
+
+
+##################################################################################
+# WRITE JSON DOCUMENT
+
+ksort($mimes);
+$mimetypes_json = __DIR__ . '/mimetypes.json';
+$generated_from = '// Generated from https://svn.apache.org/repos/asf/httpd/httpd/branches/2.0.x/docs/conf/mime.types' . PHP_EOL;
+
+if (file_put_contents($mimetypes_json, $generated_from . json_encode($mimes)))
+{
+	echo print_r($mimes, true)
+		. PHP_EOL
+		. "\033[01;32mSuccessfully wrote " . $mimetypes_json . "\033[00m"
+		. PHP_EOL
+		. PHP_EOL;
+}
+else
+{
+	echo 'Failed to write ' . $mimetypes_json . '. Please ensuse that this file system location is writable.' . PHP_EOL;
+}
