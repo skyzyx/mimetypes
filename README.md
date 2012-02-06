@@ -25,5 +25,25 @@ Run the `generate` script.
 In the end, a `mimetypes.json` document will be generated. This JSON document can be easily parsed into a map/dictionary/associative array by pretty much every programming language with little effort.
 
 
+## Installation
+### Install source from GitHub
+To install the source code:
+
+	git clone git://github.com/skyzyx/mimetypes.git
+
+And use it in your scripts:
+
+	$mimetypes = json_decode('/path/to/mimetypes/mimetypes.json');
+
+### Install with Composer
+If you're using [Composer](https://github.com/composer/composer) to manage dependencies, you can add the mimetypes with it.
+
+	{
+		"require": {
+			"skyzyx/mimetypes": ">=1.0"
+		}
+	}
+
+
 ## License & Copyright
 Copyright (c) 2010-2012 [Ryan Parman](http://ryanparman.com). Licensed for use under the terms of the [MIT license](http://www.opensource.org/licenses/mit-license.php).
