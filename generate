@@ -76,9 +76,8 @@ if (file_exists($customize_json))
 
 ksort($mimes);
 $mimetypes_json = __DIR__ . '/mimetypes.json';
-$generated_from = '// Generated from https://svn.apache.org/repos/asf/httpd/httpd/branches/2.0.x/docs/conf/mime.types' . PHP_EOL;
 
-if (file_put_contents($mimetypes_json, $generated_from . json_encode($mimes)))
+if (file_put_contents($mimetypes_json, json_encode($mimes)))
 {
 	echo print_r($mimes, true)
 		. PHP_EOL
