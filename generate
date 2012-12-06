@@ -64,10 +64,35 @@ if (file_put_contents($mimetypes_json, json_encode($mimes, $pprint)))
 	echo print_r($mimes, true)
 		. PHP_EOL
 		. "\033[01;32mSuccessfully wrote " . $mimetypes_json . "\033[00m"
-		. PHP_EOL
 		. PHP_EOL;
 }
 else
 {
 	echo 'Failed to write ' . $mimetypes_json . '. Please ensure that this file system location is writable.' . PHP_EOL;
 }
+
+
+##################################################################################
+# WRITE PHP CLASS
+
+Twig_Autoloader::register();
+
+$twig = new Twig_Environment(
+	new Twig_Loader_Filesystem(__DIR__),
+	array(
+		'autoescape'  => false,
+		'auto_reload' => true,
+	)
+);
+
+file_put_contents(
+	__DIR__ . '/src/Skyzyx/Components/Mimetypes/Mimetypes.php',
+	$twig->render('template.twig', array(
+		'mapping' => var_export($mimes, true)
+	))
+);
+
+echo "\033[01;32mSuccessfully wrote " . __DIR__ . '/src/Skyzyx/Components/Mimetypes/Mimetypes.php' . "\033[00m" . PHP_EOL;
+
+// Done.
+echo PHP_EOL;
