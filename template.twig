@@ -1,6 +1,7 @@
 <?php
 /*
  * Copyright (c) 2011-2012 [Ryan Parman](http://ryanparman.com)
+ * Portions copyright (c) 2011-2012 [Michael Dowling](https://github.com/mtdowling)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -25,8 +26,17 @@
 
 namespace Skyzyx\Components\Mimetypes;
 
+/**
+ * Provides mappings of file extensions to mimetypes
+ * @link https://svn.apache.org/repos/asf/httpd/httpd/branches/2.0.x/docs/conf/mime.types
+ */
 class Mimetypes
 {
+    /**
+     * @var self
+     */
+    protected static $instance;
+
 	/**
 	 * Returns an associative array with extension => mimetype mappings.
 	 *
@@ -34,8 +44,49 @@ class Mimetypes
 	 *
 	 * @return array An associative array with extension => mimetype mappings.
 	 */
-	public static function getMimeTypes()
+	public function getMimeTypes()
 	{
 		return {{ mapping }};
 	}
+
+    /**
+     * Get a singleton instance of the class
+     *
+     * @return self
+     * @codeCoverageIgnore
+     */
+    public static function getInstance()
+    {
+        if (!self::$instance) {
+            self::$instance = new self();
+        }
+
+        return self::$instance;
+    }
+
+    /**
+     * Get a mimetype value from a file extension
+     *
+     * @param string $extension File extension
+     *
+     * @return string|null
+     *
+     */
+    public function fromExtension($extension)
+    {
+    	$mimetypes = $this->getMimeTypes();
+        return isset($mimetypes[$extension]) ? $mimetypes[$extension] : null;
+    }
+
+    /**
+     * Get a mimetype from a filename
+     *
+     * @param string $filename Filename to generate a mimetype from
+     *
+     * @return string|null
+     */
+    public function fromFilename($filename)
+    {
+        return $this->fromExtension(pathinfo($filename, PATHINFO_EXTENSION));
+    }
 }
