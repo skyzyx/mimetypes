@@ -57,7 +57,9 @@ if (file_exists($customize_json))
 ksort($mimes);
 $mimetypes_json = __DIR__ . '/mimetypes.json';
 
-if (file_put_contents($mimetypes_json, json_encode($mimes)))
+$pprint = version_compare(PHP_VERSION, '5.4.0') ? JSON_PRETTY_PRINT : null;
+
+if (file_put_contents($mimetypes_json, json_encode($mimes, $pprint)))
 {
 	echo print_r($mimes, true)
 		. PHP_EOL
