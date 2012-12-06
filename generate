@@ -24,30 +24,10 @@
  * <http://opensource.org/licenses/MIT>
  */
 
-$lines = file(__DIR__ . '/mime.types', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-$mimes = array();
+require(__DIR__ . '/vendor/autoload.php');
 
-
-##################################################################################
-# PARSE TEXT INTO A LOGICAL DATA STRUCTURE
-
-foreach ($lines as $k => &$line)
-{
-	if (strpos($line, '#') !== 0)
-	{
-		preg_match_all('/^((\w|\/|\.|-|\+)+)(\s+)([^\n]*)$/im', $line, $match);
-		$type = $match[1][0];
-		$extensions = explode(' ', $match[4][0]);
-
-		foreach ($extensions as $extension)
-		{
-			if (!isset($mimes[$extension]))
-			{
-				$mimes[$extension] = $type;
-			}
-		}
-	}
-}
+$repository = new Dflydev\ApacheMimeTypes\FlatRepository(__DIR__ . '/mime.types');
+$mimes = $repository->dumpExtensionToType();
 
 
 ##################################################################################
