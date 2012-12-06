@@ -1,7 +1,7 @@
 <?php
 /*
  * Copyright (c) 2011-2012 [Ryan Parman](http://ryanparman.com)
- * Portions copyright (c) 2011-2012 [Michael Dowling](https://github.com/mtdowling)
+ * Copyright (c) 2011-2012 [Michael Dowling](https://github.com/mtdowling)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -37,17 +37,17 @@ class Mimetypes
      */
     protected static $instance;
 
-	/**
-	 * Returns an associative array with extension => mimetype mappings.
-	 *
-	 * Generated from source on {{ "now"|date('j M Y, g:ia T') }}.
-	 *
-	 * @return array An associative array with extension => mimetype mappings.
-	 */
-	public function getMimeTypes()
-	{
-		return {{ mapping }};
-	}
+    /**
+     * Returns an associative array with extension => mimetype mappings.
+     *
+     * Generated from source on {{ "now"|date('j M Y, g:ia T') }}.
+     *
+     * @return array An associative array with extension => mimetype mappings.
+     */
+    public function getMimeTypes()
+    {
+        return {{ mapping }};
+    }
 
     /**
      * Get a singleton instance of the class
@@ -74,7 +74,7 @@ class Mimetypes
      */
     public function fromExtension($extension)
     {
-    	$mimetypes = $this->getMimeTypes();
+        $mimetypes = $this->getMimeTypes();
         return isset($mimetypes[$extension]) ? $mimetypes[$extension] : null;
     }
 
