@@ -23,7 +23,7 @@
     },
     "autoload": {
         "psr-0": {
-            "Skyzyx\\Components\\Mimetypes": "src/Skyzyx/Components/Mimetypes"
+            "Skyzyx\\Components\\Mimetypes": "src/"
         }
     }
 }
