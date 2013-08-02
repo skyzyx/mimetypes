@@ -24,7 +24,19 @@
  * <http://opensource.org/licenses/MIT>
  */
 
-require(__DIR__ . '/vendor/autoload.php');
+$nonDependencyPath = __DIR__ . '/vendor/autoload.php';
+
+if (!is_file($nonDependencyPath)) {
+    $dependencyPath = __DIR__ . '/../../autoload.php';
+    if (!is_file($dependencyPath)) {
+        echo "Cannot find composer, please run a composer updated before continuing." . PHP_EOL;
+        exit(1);
+    } else {
+        require($dependencyPath);
+    }
+} else {
+    require($nonDependencyPath);
+}
 
 $repository = new Dflydev\ApacheMimeTypes\FlatRepository(__DIR__ . '/mime.types');
 $mimes = $repository->dumpExtensionToType();
