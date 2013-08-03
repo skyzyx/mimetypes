@@ -27,7 +27,8 @@
 namespace Skyzyx\Components\Mimetypes;
 
 /**
- * Provides mappings of file extensions to mimetypes
+ * Provides mappings of file extensions to mimetypes.
+ * API-compatible with Guzzle\Http\Mimetypes (http://guzzlephp.org).
  * @link https://svn.apache.org/repos/asf/httpd/httpd/branches/2.4.x/docs/conf/mime.types
  */
 class Mimetypes
@@ -40,7 +41,7 @@ class Mimetypes
 	/**
 	 * Returns an associative array with extension => mimetype mappings.
 	 *
-	 * Generated from source on 2 Aug 2013, 8:22pm PDT.
+	 * Generated from source on 2 Aug 2013, 8:49pm PDT.
 	 *
 	 * @return array An associative array with extension => mimetype mappings.
 	 */
