@@ -44,7 +44,7 @@ git clone git://github.com/skyzyx/mimetypes.git
 And use it in your scripts:
 
 ```php
-$mimetypes = json_decode('/path/to/mimetypes/mimetypes.json');
+$mimetypes = json_decode('/path/to/mimetypes/mimetypes.json', true);
 $type = $mimetypes['html'];
 #=> text/html
 
