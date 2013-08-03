@@ -24,18 +24,24 @@
  * <http://opensource.org/licenses/MIT>
  */
 
-$nonDependencyPath = __DIR__ . '/vendor/autoload.php';
+$non_dependency_path = __DIR__ . '/vendor/autoload.php';
 
-if (!is_file($nonDependencyPath)) {
-    $dependencyPath = __DIR__ . '/../../autoload.php';
-    if (!is_file($dependencyPath)) {
-        echo "Cannot find composer, please run a composer updated before continuing." . PHP_EOL;
-        exit(1);
-    } else {
-        require($dependencyPath);
-    }
-} else {
-    require($nonDependencyPath);
+if (is_file($non_dependency_path))
+{
+	require $non_dependency_path;
+}
+else
+{
+	$dependency_path = realpath(__DIR__ . '/../../autoload.php');
+
+	if (is_file($dependency_path))
+	{
+		require $dependency_path;
+	}
+	else
+	{
+		throw new Exception("Please install Composer dependencies before continuing.");
+	}
 }
 
 $repository = new Dflydev\ApacheMimeTypes\FlatRepository(__DIR__ . '/mime.types');
