@@ -1,12 +1,23 @@
 {
+	"7z s7z": "application/x-7z-compressed",
 	"asa ascx ashx asmx asp aspx axd cs ini php rb": "text/plain",
-	"asax hta": "application/octet-stream",
+	"asax crx hta ipa phar safariextz": "application/octet-stream",
 	"cfc cfm": "application/x-coldfusion",
+	"gz tgz": "application/x-gzip",
 	"htc": "text/html",
 	"js": "text/javascript",
+	"lz": "application/x-lzip",
+	"lzma": "application/x-lzma",
+	"lzo": "application/x-lzop",
 	"m4a": "audio/mp4",
 	"m4v": "video/mp4",
 	"phps": "application/x-httpd-phps",
+	"plist": "application/x-plist",
 	"resx": "text/xml",
-	"yml yaml": "text/yaml"
+	"rpm": "application/x-rpm",
+	"sass": "text/x-sass",
+	"scss": "text/x-scss",
+	"styl": "text/x-styl",
+	"yml yaml": "text/yaml",
+	"z": "application/x-compress"
 }
