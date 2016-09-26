@@ -1,7 +1,7 @@
 #! /usr/bin/env php
 <?php
 /*
- * Copyright (c) 2011-2013 Ryan Parman
+ * Copyright (c) 2011-2016 Ryan Parman
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of
  * this software and associated documentation files (the "Software"), to deal in
@@ -26,22 +26,16 @@
 
 $non_dependency_path = __DIR__ . '/vendor/autoload.php';
 
-if (is_file($non_dependency_path))
-{
-	require $non_dependency_path;
-}
-else
-{
-	$dependency_path = realpath(__DIR__ . '/../../autoload.php');
+if (is_file($non_dependency_path)) {
+    require $non_dependency_path;
+} else {
+    $dependency_path = realpath(__DIR__ . '/../../autoload.php');
 
-	if (is_file($dependency_path))
-	{
-		require $dependency_path;
-	}
-	else
-	{
-		throw new Exception("Please install Composer dependencies before continuing.");
-	}
+    if (is_file($dependency_path)) {
+        require $dependency_path;
+    } else {
+        throw new Exception("Please install Composer dependencies before continuing.");
+    }
 }
 
 $repository = new Dflydev\ApacheMimeTypes\FlatRepository(__DIR__ . '/mime.types');
@@ -53,19 +47,16 @@ $mimes = $repository->dumpExtensionToType();
 
 $customize_json = __DIR__ . '/customize.json';
 
-if (file_exists($customize_json))
-{
-	$entries = json_decode(file_get_contents($customize_json), true);
+if (file_exists($customize_json)) {
+    $entries = json_decode(file_get_contents($customize_json), true);
 
-	foreach ($entries as $extensions => $type)
-	{
-		$extensions = explode(' ', $extensions);
+    foreach ($entries as $extensions => $type) {
+        $extensions = explode(' ', $extensions);
 
-		foreach ($extensions as $extension)
-		{
-			$mimes[$extension] = $type;
-		}
-	}
+        foreach ($extensions as $extension) {
+            $mimes[$extension] = $type;
+        }
+    }
 }
 
 
@@ -77,16 +68,13 @@ $mimetypes_json = __DIR__ . '/mimetypes.json';
 
 $pprint = version_compare(PHP_VERSION, '5.4.0') ? JSON_PRETTY_PRINT : null;
 
-if (file_put_contents($mimetypes_json, json_encode($mimes, $pprint)))
-{
-	echo print_r($mimes, true)
-		. PHP_EOL
-		. "\033[01;32mSuccessfully wrote " . $mimetypes_json . "\033[00m"
-		. PHP_EOL;
-}
-else
-{
-	echo 'Failed to write ' . $mimetypes_json . '. Please ensure that this file system location is writable.' . PHP_EOL;
+if (file_put_contents($mimetypes_json, json_encode($mimes, $pprint))) {
+    echo print_r($mimes, true)
+        . PHP_EOL
+        . "\033[01;32mSuccessfully wrote " . $mimetypes_json . "\033[00m"
+        . PHP_EOL;
+} else {
+    echo 'Failed to write ' . $mimetypes_json . '. Please ensure that this file system location is writable.' . PHP_EOL;
 }
 
 
@@ -96,18 +84,17 @@ else
 Twig_Autoloader::register();
 
 $twig = new Twig_Environment(
-	new Twig_Loader_Filesystem(__DIR__),
-	array(
-		'autoescape'  => false,
-		'auto_reload' => true,
-	)
+    new Twig_Loader_Filesystem(__DIR__), [
+        'autoescape'  => false,
+        'auto_reload' => true,
+    ]
 );
 
 file_put_contents(
-	__DIR__ . '/src/Skyzyx/Components/Mimetypes/Mimetypes.php',
-	$twig->render('template.twig', array(
-		'mapping' => var_export($mimes, true)
-	))
+    __DIR__ . '/src/Skyzyx/Components/Mimetypes/Mimetypes.php',
+    $twig->render('template.twig', array(
+        'mapping' => var_export($mimes, true)
+    ))
 );
 
 echo "\033[01;32mSuccessfully wrote " . __DIR__ . '/src/Skyzyx/Components/Mimetypes/Mimetypes.php' . "\033[00m" . PHP_EOL;
