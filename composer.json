@@ -19,7 +19,7 @@
     },
     "require-dev": {
         "dflydev/apache-mime-types": "1.0.*@dev",
-        "twig/twig": "1.*"
+        "twig/twig": "3.*"
     },
     "autoload": {
         "psr-0": {
